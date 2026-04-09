@@ -12,10 +12,14 @@ import { BankAccount } from "./account.modal";
 export class ParentComponent implements OnInit{
     private http = inject(HttpClient);
     accounts !: BankAccount[] ; 
+    selectedAccount : BankAccount | null = null; 
     ngOnInit() {
-        this.http.get<BankAccount[]>('assets/accounts.json').subscribe(data =>{
-            console.log(data); 
+        this.http.get<BankAccount[]>('/assets/account.json').subscribe(data =>{
             this.accounts = data; 
         });
+    }
+
+    selectAccount(account: BankAccount){
+        this.selectedAccount = account; 
     }
 }
