@@ -9,13 +9,17 @@ import { RandBalancePipe } from "./rand-balance.pipe";
 @Component({
     selector: `app-bank-parent`,
     standalone: true, 
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [CommonModule, HighlightDirective , ChildComponent , RandBalancePipe],
     templateUrl:'./parent.component.html',
+    styleUrl: './parent.component.css',
 })
 export class ParentComponent implements OnInit{
     private http = inject(HttpClient);
     accounts !: BankAccount[] ; 
     selectedAccount : BankAccount | null = null; 
+    selectedCurrency: string = 'ZAR';
+
     ngOnInit() {
         this.http.get<BankAccount[]>('/assets/account.json').subscribe(data =>{
             this.accounts = data; 
@@ -42,5 +46,9 @@ export class ParentComponent implements OnInit{
 
     closeDetail(){
         this.selectedAccount = null;
+    }
+
+    switchCurrency(currency: string){
+        this.selectedCurrency = currency;
     }
 }

@@ -3,30 +3,51 @@
         <h1>My Accounts</h1>
         <p>Select an account to view details</p>
     </header>
-    <div class="accounts-grid" *ngIf="accounts; else loading">
-        <div
-            class="account-card"
-            *ngFor="let account of accounts"
-            appHighlight
-            (click)="selectAccount(account)">
 
-            <div class="card-body">
-                <p class="card-type">{{ account.accountType }}</p>
-                <p class="card-number">{{ account.accountNumber }}</p>
-            </div>
-
-            <div class="card-balance">
-                <span class="balance-label">Balance</span>
-                <span class="balance-value">{{ account.balance | randBalance }}</span>
-            </div>
-
-        </div>
-
+    <div class="currency-buttons">
+        <button (click)="switchCurrency('ZAR')" [class.active]="selectedCurrency === 'ZAR'">ZAR</button>
+        <button (click)="switchCurrency('USD')" [class.active]="selectedCurrency === 'USD'">USD</button>
+        <button (click)="switchCurrency('EUR')" [class.active]="selectedCurrency === 'EUR'">EUR</button>
+        <button (click)="switchCurrency('GBP')" [class.active]="selectedCurrency === 'GBP'">GBP</button>
     </div>
 
-    <ng-template #loading>
+    @if(accounts){
+        <div class="accounts-grid" >
+            @for(account of accounts ; track account.id){
+                <div
+                class="account-card"
+                appHighlight
+                (click)="selectAccount(account)">
+
+                    <div class="card-body">
+                        <p class="card-type">{{ account.accountType }}</p>
+                        <p class="card-number">{{ account.accountNumber }}</p>
+                    </div>
+
+                    <div class="card-balance">
+                        <span class="balance-label">Balance</span>
+                        @switch(selectedCurrency){
+                            @case('ZAR'){
+                                <span class="balance-value">{{ account.balance | randBalance:'ZAR' }}</span>
+                            }
+                            @case('USD'){
+                                <span class="balance-value">{{ account.balance | randBalance:'USD' }}</span>
+                            }
+                            @case('EUR'){
+                                <span class="balance-value">{{ account.balance | randBalance:'EUR' }}</span>
+                            }
+                             @case('GBP'){
+                                <span class="balance-value">{{ account.balance | randBalance:'GBP' }}</span>
+                            }
+                        }
+                    </div>
+
+                </div>
+            }
+        </div>
+    } @else {
         <p class="loading">Loading accounts…</p>
-    </ng-template>
+    }
     <app-child
         *ngIf="selectedAccount"
         [balance]="selectedAccount.balance"
