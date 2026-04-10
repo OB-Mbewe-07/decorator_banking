@@ -48,12 +48,19 @@
     } @else {
         <p class="loading">Loading accounts…</p>
     }
-    <app-child
-        *ngIf="selectedAccount"
-        [balance]="selectedAccount.balance"
-        [accountNumber]="selectedAccount.accountNumber"
-        [owner]="selectedAccount.owner"
-        [branch]="selectedAccount.branch"
-        (close)="closeDetail()">
-    </app-child>
+
+    @defer ( when selectedAccount){
+        <app-child
+            *ngIf="selectedAccount"
+            [balance]="selectedAccount.balance"
+            [accountNumber]="selectedAccount.accountNumber"
+            [owner]="selectedAccount.owner"
+            [branch]="selectedAccount.branch"
+            (close)="closeDetail()">
+        </app-child>
+    } @loading {
+        <p>Loading account details...</p>
+    } @error {
+        <p>Failed to load account details</p>
+    }
 </div>
