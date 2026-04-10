@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "accountType": "Main Savings",
+    "balance": 10500.00,
+    "accountNumber": "ACT-7721",
+    "owner": "Sarah Dlamini",
+    "branch": "Sandton City"
+  },
+  {
+    "id": 2,
+    "accountType": "Daily Checking",
+    "balance": 2450.50,
+    "accountNumber": "ACT-1092",
+    "owner": "Thabo Nkosi",
+    "branch": "Rosebank"
+  },
+  {
+    "id": 3,
+    "accountType": "Emergency Fund",
+    "balance": 45000.00,
+    "accountNumber": "ACT-8834",
+    "owner": "Priya Pillay",
+    "branch": "Menlyn"
+  },
+  {
+    "id": 4,
+    "accountType": "Vacation Fund",
+    "balance": 1200.00,
+    "accountNumber": "ACT-2210",
+    "owner": "James van der Berg",
+    "branch": "Century City"
+  },
+  {
+    "id": 5,
+    "accountType": "Business Account",
+    "balance": 89200.75,
+    "accountNumber": "ACT-5567",
+    "owner": "Nomsa Khumalo",
+    "branch": "Sandton City"
+  },
+  {
+    "id": 6,
+    "accountType": "Investment Portfolio",
+    "balance": 156000.30,
+    "accountNumber": "ACT-4432",
+    "owner": "Ravi Naidoo",
+    "branch": "Umhlanga"
+  }
+]
