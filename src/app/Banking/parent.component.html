@@ -1,0 +1,38 @@
+<div class="page">
+    <header class="page-header">
+        <h1>My Accounts</h1>
+        <p>Select an account to view details</p>
+    </header>
+    <div class="accounts-grid" *ngIf="accounts; else loading">
+        <div
+            class="account-card"
+            *ngFor="let account of accounts"
+            appHighlight
+            (click)="selectAccount(account)">
+
+            <div class="card-body">
+                <p class="card-type">{{ account.accountType }}</p>
+                <p class="card-number">{{ account.accountNumber }}</p>
+            </div>
+
+            <div class="card-balance">
+                <span class="balance-label">Balance</span>
+                <span class="balance-value">{{ account.balance | randBalance }}</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <ng-template #loading>
+        <p class="loading">Loading accounts…</p>
+    </ng-template>
+    <app-child
+        *ngIf="selectedAccount"
+        [balance]="selectedAccount.balance"
+        [accountNumber]="selectedAccount.accountNumber"
+        [owner]="selectedAccount.owner"
+        [branch]="selectedAccount.branch"
+        (close)="closeDetail()">
+    </app-child>
+</div>
