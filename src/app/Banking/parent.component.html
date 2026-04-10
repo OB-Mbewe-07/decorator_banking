@@ -14,11 +14,17 @@
     @if(accounts){
         <div class="accounts-grid" >
             @for(account of accounts ; track account.id){
+                @let initials = account.owner[0]; 
+
                 <div
                 class="account-card"
                 appHighlight
                 (click)="selectAccount(account)">
 
+                    <div class="card-avatar">
+                        <span>{{ initials }}</span>
+                    </div>
+                    
                     <div class="card-body">
                         <p class="card-type">{{ account.accountType }}</p>
                         <p class="card-number">{{ account.accountNumber }}</p>
