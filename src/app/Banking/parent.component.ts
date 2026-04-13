@@ -5,6 +5,7 @@ import { BankAccount } from "./account.modal";
 import { HighlightDirective } from "./higlight.directive";
 import { ChildComponent } from "./child.component";
 import { RandBalancePipe } from "./rand-balance.pipe";
+import { USER_OBJECT } from "../core/user.object";
 
 @Component({
     selector: `app-bank-parent`,
@@ -19,6 +20,7 @@ export class ParentComponent implements OnInit{
     accounts !: BankAccount[] ; 
     selectedAccount : BankAccount | null = null; 
     selectedCurrency: string = 'ZAR';
+    loggedIn = inject(USER_OBJECT);
 
     ngOnInit() {
         this.http.get<BankAccount[]>('/assets/account.json').subscribe(data =>{

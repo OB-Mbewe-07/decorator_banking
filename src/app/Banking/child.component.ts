@@ -38,7 +38,6 @@ import { RandBalancePipe } from "./rand-balance.pipe";
 
 })
 export class ChildComponent{
-
     @Input() balance  = 0;
     @Input() accountNumber = '';
     @Input() owner = '';

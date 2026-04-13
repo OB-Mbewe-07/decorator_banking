@@ -1,4 +1,12 @@
 <div class="page">
+    @if(loggedIn){
+        <ng-container>
+            <h2>Logged In User</h2>
+            <div>Hello: {{loggedIn.name}}</div>
+            <div>Email: {{loggedIn.email}}</div>
+        </ng-container>
+    }
+
     <header class="page-header">
         <h1>My Accounts</h1>
         <p>Select an account to view details</p>
@@ -14,17 +22,11 @@
     @if(accounts){
         <div class="accounts-grid" >
             @for(account of accounts ; track account.id){
-                @let initials = account.owner[0]; 
 
                 <div
                 class="account-card"
                 appHighlight
                 (click)="selectAccount(account)">
-
-                    <div class="card-avatar">
-                        <span>{{ initials }}</span>
-                    </div>
-                    
                     <div class="card-body">
                         <p class="card-type">{{ account.accountType }}</p>
                         <p class="card-number">{{ account.accountNumber }}</p>
