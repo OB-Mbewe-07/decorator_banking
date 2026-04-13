@@ -5,7 +5,8 @@
     "balance": 10500.00,
     "accountNumber": "ACT-7721",
     "owner": "Sarah Dlamini",
-    "branch": "Sandton City"
+    "branch": "Sandton City",
+    "currency": "ZAR"
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "balance": 2450.50,
     "accountNumber": "ACT-1092",
     "owner": "Thabo Nkosi",
-    "branch": "Rosebank"
+    "branch": "Rosebank",
+    "currency": "ZAR"
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "balance": 45000.00,
     "accountNumber": "ACT-8834",
     "owner": "Priya Pillay",
-    "branch": "Menlyn"
+    "branch": "Menlyn",
+    "currency": "ZAR"
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "balance": 1200.00,
     "accountNumber": "ACT-2210",
     "owner": "James van der Berg",
-    "branch": "Century City"
+    "branch": "Century City",
+    "currency": "ZAR"
   },
   {
     "id": 5,
@@ -37,7 +41,8 @@
     "balance": 89200.75,
     "accountNumber": "ACT-5567",
     "owner": "Nomsa Khumalo",
-    "branch": "Sandton City"
+    "branch": "Sandton City",
+    "currency": "ZAR"
   },
   {
     "id": 6,
@@ -45,6 +50,7 @@
     "balance": 156000.30,
     "accountNumber": "ACT-4432",
     "owner": "Ravi Naidoo",
-    "branch": "Umhlanga"
+    "branch": "Umhlanga",
+    "currency": "ZAR"
   }
 ]

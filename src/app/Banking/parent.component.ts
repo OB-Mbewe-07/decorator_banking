@@ -6,6 +6,8 @@ import { HighlightDirective } from "./higlight.directive";
 import { ChildComponent } from "./child.component";
 import { RandBalancePipe } from "./rand-balance.pipe";
 import { USER_OBJECT } from "../core/user.object";
+import { NetworthModel } from "./services/net-worth.model";
+import { NetWorthService } from "./services/net-worth.service";
 
 @Component({
     selector: `app-bank-parent`,
@@ -17,17 +19,33 @@ import { USER_OBJECT } from "../core/user.object";
 })
 export class ParentComponent implements OnInit{
     private http = inject(HttpClient);
+    private netWorthService = inject(NetWorthService);
+    loggedIn = inject(USER_OBJECT);
+
     accounts !: BankAccount[] ; 
     selectedAccount : BankAccount | null = null; 
     selectedCurrency: string = 'ZAR';
-    loggedIn = inject(USER_OBJECT);
-
+    netWorth: NetworthModel | null = null;
+Object: any;
+    
     ngOnInit() {
         this.http.get<BankAccount[]>('/assets/account.json').subscribe(data =>{
             this.accounts = data; 
+            console.log(data);
+            this.calculateNetWorth();
             this.balanceChange();
         });
     };
+
+    calculateNetWorth(){
+        if(this.accounts && this.accounts.length > 0){
+            this.netWorth = this.netWorthService.calculateNetWorth(this.accounts);
+            console.log("net worth is: " + this.netWorth);
+        }else{
+            console.warn("No accounts in here");
+        }
+    }
+
 
     balanceChange(){
         setInterval(() => {

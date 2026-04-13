@@ -71,4 +71,30 @@
     } @error {
         <p>Failed to load account details</p>
     }
+
+    @if(netWorth){
+        <div class="net-worth-summary">
+            <h2>Your Net Worth</h2>
+            <div class="total">
+                <span>Total Net Worth</span>
+                <strong>R {{ netWorth.totalInRand | number:'1.2-2' }}</strong>
+            </div>
+            
+            <div class="breakdown">
+                <p><strong>Currency Breakdown:</strong></p>
+                @if(netWorth.currencyBreakdown && Object.keys(netWorth.currencyBreakdown).length > 0){
+                    @for (item of netWorth.currencyBreakdown | keyvalue; track item.key) {
+                        <p class="currency-item">
+                            <span class="currency">{{ item.key }}</span> 
+                            <strong>{{ item.value | number:'1.2-2' }}</strong>
+                        </p>
+                    }
+                } @else {
+                    <p>No currency data</p>
+                }
+            </div>
+        </div>
+    } @else {
+        <p>Loading Net Worth...</p>
+    }
 </div>
