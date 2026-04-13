@@ -1,100 +1,137 @@
-<div class="page">
-    @if(loggedIn){
-        <ng-container>
-            <h2>Logged In User</h2>
-            <div>Hello: {{loggedIn.name}}</div>
-            <div>Email: {{loggedIn.email}}</div>
-        </ng-container>
-    }
+<div class="page" [style.backgroundColor]="theme.backgroundColor">
+  @if (loggedIn) {
+    <ng-container>
+      <h2>Logged In User</h2>
+      <div>Hello: {{ loggedIn.name }}</div>
+      <div>Email: {{ loggedIn.email }}</div>
+    </ng-container>
+  }
 
-    <header class="page-header">
-        <h1>My Accounts</h1>
-        <p>Select an account to view details</p>
-    </header>
+  <header
+    class="page-header"
+    [style.backgroundColor]="theme.cardColor"
+    [style.color]="theme.textColor"
+  >
+    <h1>My Accounts</h1>
+    <p>Select an account to view details</p>
+  </header>
 
-    <div class="currency-buttons">
-        <button (click)="switchCurrency('ZAR')" [class.active]="selectedCurrency === 'ZAR'">ZAR</button>
-        <button (click)="switchCurrency('USD')" [class.active]="selectedCurrency === 'USD'">USD</button>
-        <button (click)="switchCurrency('EUR')" [class.active]="selectedCurrency === 'EUR'">EUR</button>
-        <button (click)="switchCurrency('GBP')" [class.active]="selectedCurrency === 'GBP'">GBP</button>
-    </div>
+  <div class="currency-buttons">
+    <button
+      (click)="switchCurrency('ZAR')"
+      [class.active]="selectedCurrency === 'ZAR'"
+    >
+      ZAR
+    </button>
+    <button
+      (click)="switchCurrency('USD')"
+      [class.active]="selectedCurrency === 'USD'"
+    >
+      USD
+    </button>
+    <button
+      (click)="switchCurrency('EUR')"
+      [class.active]="selectedCurrency === 'EUR'"
+    >
+      EUR
+    </button>
+    <button
+      (click)="switchCurrency('GBP')"
+      [class.active]="selectedCurrency === 'GBP'"
+    >
+      GBP
+    </button>
+  </div>
 
-    @if(accounts){
-        <div class="accounts-grid" >
-            @for(account of accounts ; track account.id){
+  @if (accounts) {
+    <div class="accounts-grid">
+      @for (account of accounts; track account.id) {
+        <div
+          class="account-card"
+          appHighlight
+          (click)="selectAccount(account)"
+          [style.backgroundColor]="theme.cardColor"
+          [style.color]="theme.textColor"
+        >
+          <div class="card-body">
+            <p class="card-type">{{ account.accountType }}</p>
+            <p class="card-number">{{ account.accountNumber }}</p>
+          </div>
 
-                <div
-                class="account-card"
-                appHighlight
-                (click)="selectAccount(account)">
-                    <div class="card-body">
-                        <p class="card-type">{{ account.accountType }}</p>
-                        <p class="card-number">{{ account.accountNumber }}</p>
-                    </div>
-
-                    <div class="card-balance">
-                        <span class="balance-label">Balance</span>
-                        @switch(selectedCurrency){
-                            @case('ZAR'){
-                                <span class="balance-value">{{ account.balance | randBalance:'ZAR' }}</span>
-                            }
-                            @case('USD'){
-                                <span class="balance-value">{{ account.balance | randBalance:'USD' }}</span>
-                            }
-                            @case('EUR'){
-                                <span class="balance-value">{{ account.balance | randBalance:'EUR' }}</span>
-                            }
-                             @case('GBP'){
-                                <span class="balance-value">{{ account.balance | randBalance:'GBP' }}</span>
-                            }
-                        }
-                    </div>
-
-                </div>
+          <div class="card-balance">
+            <span class="balance-label">Balance</span>
+            @switch (selectedCurrency) {
+              @case ("ZAR") {
+                <span class="balance-value">{{
+                  account.balance | randBalance: "ZAR"
+                }}</span>
+              }
+              @case ("USD") {
+                <span class="balance-value">{{
+                  account.balance | randBalance: "USD"
+                }}</span>
+              }
+              @case ("EUR") {
+                <span class="balance-value">{{
+                  account.balance | randBalance: "EUR"
+                }}</span>
+              }
+              @case ("GBP") {
+                <span class="balance-value">{{
+                  account.balance | randBalance: "GBP"
+                }}</span>
+              }
             }
+          </div>
         </div>
-    } @else {
-        <p class="loading">Loading accounts…</p>
-    }
+      }
+    </div>
+  } @else {
+    <p class="loading">Loading accounts…</p>
+  }
 
-    @defer ( when selectedAccount){
-        <app-child
-            *ngIf="selectedAccount"
-            [balance]="selectedAccount.balance"
-            [accountNumber]="selectedAccount.accountNumber"
-            [owner]="selectedAccount.owner"
-            [branch]="selectedAccount.branch"
-            (close)="closeDetail()">
-        </app-child>
-    } @loading {
-        <p>Loading account details...</p>
-    } @error {
-        <p>Failed to load account details</p>
-    }
+  @defer (when selectedAccount) {
+    <app-child
+      *ngIf="selectedAccount"
+      [balance]="selectedAccount.balance"
+      [accountNumber]="selectedAccount.accountNumber"
+      [owner]="selectedAccount.owner"
+      [branch]="selectedAccount.branch"
+      (close)="closeDetail()"
+    >
+    </app-child>
+  } @loading {
+    <p>Loading account details...</p>
+  } @error {
+    <p>Failed to load account details</p>
+  }
 
-    @if(netWorth){
-        <div class="net-worth-summary">
-            <h2>Your Net Worth</h2>
-            <div class="total">
-                <span>Total Net Worth</span>
-                <strong>R {{ netWorth.totalInRand | number:'1.2-2' }}</strong>
-            </div>
-            
-            <div class="breakdown">
-                <p><strong>Currency Breakdown:</strong></p>
-                @if(netWorth.currencyBreakdown && Object.keys(netWorth.currencyBreakdown).length > 0){
-                    @for (item of netWorth.currencyBreakdown | keyvalue; track item.key) {
-                        <p class="currency-item">
-                            <span class="currency">{{ item.key }}</span> 
-                            <strong>{{ item.value | number:'1.2-2' }}</strong>
-                        </p>
-                    }
-                } @else {
-                    <p>No currency data</p>
-                }
-            </div>
-        </div>
-    } @else {
-        <p>Loading Net Worth...</p>
-    }
+  @if (netWorth) {
+    <div class="net-worth-summary">
+      <h2>Your Net Worth</h2>
+      <div class="total">
+        <span>Total Net Worth</span>
+        <strong>R {{ netWorth.totalInRand | number: "1.2-2" }}</strong>
+      </div>
+
+      <div class="breakdown">
+        <p><strong>Currency Breakdown:</strong></p>
+        @if (
+          netWorth.currencyBreakdown &&
+          Object.keys(netWorth.currencyBreakdown).length > 0
+        ) {
+          @for (item of netWorth.currencyBreakdown | keyvalue; track item.key) {
+            <p class="currency-item">
+              <span class="currency">{{ item.key }}</span>
+              <strong>{{ item.value | number: "1.2-2" }}</strong>
+            </p>
+          }
+        } @else {
+          <p>No currency data</p>
+        }
+      </div>
+    </div>
+  } @else {
+    <p>Loading Net Worth...</p>
+  }
 </div>

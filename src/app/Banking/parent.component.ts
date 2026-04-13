@@ -8,6 +8,8 @@ import { RandBalancePipe } from "./rand-balance.pipe";
 import { USER_OBJECT } from "../core/user.object";
 import { NetworthModel } from "./services/net-worth.model";
 import { NetWorthService } from "./services/net-worth.service";
+import { THEME } from "./theme/theme.factory";
+import { DashboardTheme } from "./theme/theme.model";
 
 @Component({
     selector: `app-bank-parent`,
@@ -26,7 +28,8 @@ export class ParentComponent implements OnInit{
     selectedAccount : BankAccount | null = null; 
     selectedCurrency: string = 'ZAR';
     netWorth: NetworthModel | null = null;
-Object: any;
+    theme = inject(THEME);
+    Object: any;
     
     ngOnInit() {
         this.http.get<BankAccount[]>('/assets/account.json').subscribe(data =>{
@@ -36,6 +39,11 @@ Object: any;
             this.balanceChange();
         });
     };
+
+    changeTheme(newTheme: Partial<DashboardTheme>) {
+        this.theme = { ...this.theme, ...newTheme };
+        localStorage.setItem('dashboardTheme', JSON.stringify(this.theme));
+    }
 
     calculateNetWorth(){
         if(this.accounts && this.accounts.length > 0){
