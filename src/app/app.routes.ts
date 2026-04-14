@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { ParentComponent } from './Banking/parent.component/parent.component';
+import {LobbyPageComponent} from './Banking/lobby.component/lobby.component'
 
 export const routes: Routes = [
     {
@@ -9,10 +10,11 @@ export const routes: Routes = [
     },
     {
         path: '/LoanRequest', 
-        component
-    }
+        component: LobbyPageComponent,
+        title: 'Loan Request'
+    },
     {
-        path: '**'
+        path: '**',
         redirectTo: ''
     }
 ];
