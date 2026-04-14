@@ -6,5 +6,14 @@ export interface BankAccount {
   branch: string;
   accountType: string;
   accountNumber: string;
+  currency ? : string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  email : string;
+  role?: string;
+  phone: string;
 }
 
