@@ -117,8 +117,7 @@
       <div class="breakdown">
         <p><strong>Currency Breakdown:</strong></p>
         @if (
-          netWorth.currencyBreakdown &&
-          Object.keys(netWorth.currencyBreakdown).length > 0
+          netWorth.currencyBreakdown 
         ) {
           @for (item of netWorth.currencyBreakdown | keyvalue; track item.key) {
             <p class="currency-item">

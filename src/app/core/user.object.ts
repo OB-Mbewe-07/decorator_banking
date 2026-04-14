@@ -1,5 +1,6 @@
 import { InjectionToken } from "@angular/core";
-import { User } from "../Banking/account.modal";
+import { User } from "../Banking/modals/account.modal";
+
 
 export const CURRENT_USER : User = {
     id : 1,

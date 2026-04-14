@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { BankAccount } from "../account.modal";
 import { NetworthModel } from "./net-worth.model";
+import { BankAccount } from "../modals/account.modal";
 
 @Injectable({
     providedIn: "root"
