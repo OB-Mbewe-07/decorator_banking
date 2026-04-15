@@ -14,13 +14,9 @@ export const routes: Routes = [
         component: LobbyPageComponent,
         title: 'Loan Request'
     },
-    {   
-        path: '404',
-        component: NotFoundComponentPage,
-        title: 'Page not found'
-    },
     {
         path: '**',
-        redirectTo: '404'
+        component: NotFoundComponentPage,
+        title: 'Page not found'
     }
 ];

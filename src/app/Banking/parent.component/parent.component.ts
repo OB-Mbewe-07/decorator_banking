@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -14,6 +13,7 @@ import { THEME } from '../theme/theme.factory';
 import { USER_OBJECT } from '../../core/user.object';
 import { NetWorthService } from '../services/net-worth.service';
 import { NetworthModel } from '../services/net-worth.model';
+import { DataServicesCalls } from '../services/data.services';
 
 @Component({
   selector: `app-bank-parent`,
@@ -24,21 +24,21 @@ import { NetworthModel } from '../services/net-worth.model';
   styleUrl: './parent.component.css',
 })
 export class ParentComponent implements OnInit {
-  private http = inject(HttpClient);
   private netWorthService = inject(NetWorthService);
+  private apiData = inject(DataServicesCalls);
 
   theme = inject(THEME);
   loggedIn = inject(USER_OBJECT);
-  
+
   accounts!: BankAccount[];
   selectedAccount: BankAccount | null = null;
   netWorth: NetworthModel | null = null;
   selectedCurrency: string = 'ZAR';
 
   ngOnInit() {
-    this.http.get<BankAccount[]>('/assets/account.json').subscribe((data) => {
+    this.apiData.getAccountData().subscribe((data) => {
       this.accounts = data;
-      this.calculateNetWorth(); 
+      this.calculateNetWorth();
       this.balanceChange();
     });
   }
@@ -46,7 +46,7 @@ export class ParentComponent implements OnInit {
   calculateNetWorth() {
     if (this.accounts?.length > 0) {
       this.netWorth = this.netWorthService.calculateNetWorth(this.accounts);
-      console.log('Net Worth Calculated:', this.netWorth); 
+      console.log('Net Worth Calculated:', this.netWorth);
     }
   }
 
