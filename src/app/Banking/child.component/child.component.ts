@@ -8,9 +8,8 @@ import {
 import { RandBalancePipe } from '../pipe/rand-balance.pipe';
 
 @Component({
-  selector: 'app-child',
-  standalone: true,
-  template: ` <div class="overlay" (click)="close.emit()">
+    selector: 'app-child',
+    template: ` <div class="overlay" (click)="close.emit()">
     <div class="card" (click)="$event.stopPropagation()">
       <div class="card-header">
         <button class="close-btn" (click)="close.emit()">✕</button>
@@ -35,7 +34,7 @@ import { RandBalancePipe } from '../pipe/rand-balance.pipe';
       </div>
     </div>
   </div>`,
-  imports: [CommonModule, RandBalancePipe],
+    imports: [CommonModule, RandBalancePipe]
 })
 export class ChildComponent {
   @Input() balance = 0;

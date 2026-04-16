@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { RouterLink, RouterLinkActive } from "@angular/router";
 
 @Component({
-    standalone: true,
     selector: 'app-navbar',
     template: `
         <nav class='navbar'>
@@ -14,7 +13,7 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
             </a>
         </nav>
     `,
-    imports: [RouterLink, RouterLinkActive],
+    imports: [RouterLink, RouterLinkActive]
 })
 export class NavbarComponent{
 

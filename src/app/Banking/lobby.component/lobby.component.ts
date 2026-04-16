@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-lobby-page',
-    standalone: true,
     imports: [CommonModule, FormsModule],
     template: `
        <div class="lobby-container">

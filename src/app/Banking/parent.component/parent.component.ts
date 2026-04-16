@@ -16,12 +16,11 @@ import { NetworthModel } from '../services/net-worth.model';
 import { DataServicesCalls } from '../services/data.services';
 
 @Component({
-  selector: `app-bank-parent`,
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, HighlightDirective, ChildComponent, RandBalancePipe],
-  templateUrl: './parent.component.html',
-  styleUrl: './parent.component.css',
+    selector: `app-bank-parent`,
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [CommonModule, HighlightDirective, ChildComponent, RandBalancePipe],
+    templateUrl: './parent.component.html',
+    styleUrl: './parent.component.css'
 })
 export class ParentComponent implements OnInit {
   private netWorthService = inject(NetWorthService);
