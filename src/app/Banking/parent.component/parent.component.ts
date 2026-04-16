@@ -4,7 +4,7 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   inject,
   OnInit,
-} from '@angular/core';
+} from '@angular/core';  
 import { BankAccount } from '../modals/account.modal';
 import { HighlightDirective } from '../directive/higlight.directive';
 import { ChildComponent } from '../child.component/child.component';
