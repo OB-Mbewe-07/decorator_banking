@@ -4,48 +4,77 @@ import { DataServicesCalls } from '../services/data.services';
 import { ClientData } from '../modals/data-service.modal';
 import { BankAccount } from '../modals/account.modal';
 import { LoanService } from '../services/loan.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-lobby-page',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
     template: `
-        <div class="client-container">
-            @for (client of clientData; track client.name) {
-                <div class="client-card">
-                    <h2>{{ client.name }}</h2>
-                    <hr>
-                    <div class="details">
-                        <p><strong>Birth Year:</strong> {{ client.birth_year }}</p>
-                        <p><strong>Gender:</strong> {{ client.gender }}</p>
-                        <p><strong>Physical Traits:</strong></p>
-                        <ul>
-                        <li>Height: {{ client.height }}cm</li>
-                        <li>Mass: {{ client.mass }}kg</li>
-                        <li>Hair: {{ client.hair_color }}</li>
-                        <li>Eyes: {{ client.eye_color }}</li>
-                        <li>Skin: {{ client.skin_color }}</li>
-                        </ul>
-                    </div>
-                    <div class="request">
-                        <select name="" id="">
-                            @for(account of accounts; track account.id){
-                                <option value="">
-                                    {{account.accountType}}
-                                </option>
-                            }
-                        </select>
-                        <button>
-                            Ask for a loan
-                        </button>
-                        <input type="text" placeholder="R 00.00">
-                    </div>
-                    
-                </div>
-            } @empty {
-                <p>No client data found.</p>
-            }
+       <div class="lobby-container">
+    <h1 class="page-title">Loan Request Portal</h1>
+    <p class="subtitle">Select a client and request a loan from their account</p>
+
+    <div class="client-container">
+        @for (client of clientData; track client.name) {
+        <div class="client-card">
+            <div class="card-header">
+            <h2>{{ client.name }}</h2>
+            <span class="status-badge">Active Client</span>
+            </div>
+            
+            <hr>
+            
+            <div class="details">
+            <p><strong>Birth Year:</strong> {{ client.birth_year }}</p>
+            <p><strong>Gender:</strong> {{ client.gender }}</p>
+            <p><strong>Physical Traits:</strong></p>
+            <ul>
+                <li>Height: {{ client.height }}cm</li>
+                <li>Mass: {{ client.mass }}kg</li>
+                <li>Hair: {{ client.hair_color }}</li>
+                <li>Eyes: {{ client.eye_color }}</li>
+                <li>Skin: {{ client.skin_color }}</li>
+            </ul>
+            </div>
+
+            <div class="loan-request-section">
+            <h3>Request Loan</h3>
+            
+            <div class="form-row">
+                <select [(ngModel)]="selectedAccountId" class="account-select">
+                <option value="" disabled selected>-- Select Account --</option>
+                @for (account of accounts; track account.id) {
+                    <option [value]="account.id">
+                    {{ account.accountType }} — {{ account.accountNumber }}
+                    </option>
+                }
+                </select>
+
+                <input 
+                type="number" 
+                [(ngModel)]="loanAmount" 
+                class="amount-input"
+                placeholder="Loan Amount (ZAR)"
+                min="1000">
+            </div>
+
+            <textarea 
+                [(ngModel)]="loanReason" 
+                class="reason-textarea"
+                placeholder="Reason for loan (e.g. Business expansion, Vehicle purchase...)">
+            </textarea>
+
+            <button class="loan-btn" (click)="submitLoanRequest()">
+                Submit Loan Request
+            </button>
+            </div>
         </div>
+        } @empty {
+        <p class="no-data">No client data found.</p>
+        }
+    </div>
+    </div>
     `
 })
 export class LobbyPageComponent implements OnInit{
@@ -54,6 +83,7 @@ export class LobbyPageComponent implements OnInit{
     
     clientData : ClientData[] = [] ;
     accounts : BankAccount[] = [];
+
     selectedAccountId: number | null = null;
     loanAmount : number = 0;
     loanReason : string = '';
@@ -73,6 +103,10 @@ export class LobbyPageComponent implements OnInit{
                 this.accounts = data;
             }
         })
+    }
+
+    hasUnsavedChanges(): boolean{
+        return this.loanAmount > 0 || this.loanReason !== '';
     }
 
     submitLoanRequest() {
