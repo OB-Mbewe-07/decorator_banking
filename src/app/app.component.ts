@@ -10,5 +10,6 @@ import { NavbarComponent } from "./Banking/nav.component/nav.component";
     styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'decorator_banking';
+
+   title = 'decorator_banking';
 }

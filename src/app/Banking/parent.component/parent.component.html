@@ -11,7 +11,7 @@
     class="page-header"
     [style.backgroundColor]="theme.cardColor"
     [style.color]="theme.textColor"
-  >
+    >
     <h1>My Accounts</h1>
     <p>Select an account to view details</p>
   </header>
@@ -20,25 +20,25 @@
     <button
       (click)="switchCurrency('ZAR')"
       [class.active]="selectedCurrency === 'ZAR'"
-    >
+      >
       ZAR
     </button>
     <button
       (click)="switchCurrency('USD')"
       [class.active]="selectedCurrency === 'USD'"
-    >
+      >
       USD
     </button>
     <button
       (click)="switchCurrency('EUR')"
       [class.active]="selectedCurrency === 'EUR'"
-    >
+      >
       EUR
     </button>
     <button
       (click)="switchCurrency('GBP')"
       [class.active]="selectedCurrency === 'GBP'"
-    >
+      >
       GBP
     </button>
   </div>
@@ -52,7 +52,7 @@
           (click)="selectAccount(account)"
           [style.backgroundColor]="theme.cardColor"
           [style.color]="theme.textColor"
-        >
+          >
           <div class="card-body">
             <p class="card-type">{{ account.accountType }}</p>
             <p class="card-number">{{ account.accountNumber }}</p>
@@ -91,46 +91,47 @@
   }
 
   @defer (when selectedAccount) {
+  @if (selectedAccount) {
     <app-child
-      *ngIf="selectedAccount"
       [balance]="selectedAccount.balance"
       [accountNumber]="selectedAccount.accountNumber"
       [owner]="selectedAccount.owner"
       [branch]="selectedAccount.branch"
       (close)="closeDetail()"
-    >
+      >
     </app-child>
+  }
   } @loading {
-    <p>Loading account details...</p>
+  <p>Loading account details...</p>
   } @error {
-    <p>Failed to load account details</p>
-  }
+  <p>Failed to load account details</p>
+}
 
-  @if (netWorth) {
-    <div class="net-worth-summary">
-      <h2>Your Net Worth</h2>
-      <div class="total">
-        <span>Total Net Worth</span>
-        <strong>R {{ netWorth.totalInRand | number: "1.2-2" }}</strong>
-      </div>
-
-      <div class="breakdown">
-        <p><strong>Currency Breakdown:</strong></p>
-        @if (
-          netWorth.currencyBreakdown 
-        ) {
-          @for (item of netWorth.currencyBreakdown | keyvalue; track item.key) {
-            <p class="currency-item">
-              <span class="currency">{{ item.key }}</span>
-              <strong>{{ item.value | number: "1.2-2" }}</strong>
-            </p>
-          }
-        } @else {
-          <p>No currency data</p>
-        }
-      </div>
+@if (netWorth) {
+  <div class="net-worth-summary">
+    <h2>Your Net Worth</h2>
+    <div class="total">
+      <span>Total Net Worth</span>
+      <strong>R {{ netWorth.totalInRand | number: "1.2-2" }}</strong>
     </div>
-  } @else {
-    <p>Loading Net Worth...</p>
-  }
+
+    <div class="breakdown">
+      <p><strong>Currency Breakdown:</strong></p>
+      @if (
+        netWorth.currencyBreakdown
+        ) {
+        @for (item of netWorth.currencyBreakdown | keyvalue; track item.key) {
+          <p class="currency-item">
+            <span class="currency">{{ item.key }}</span>
+            <strong>{{ item.value | number: "1.2-2" }}</strong>
+          </p>
+        }
+      } @else {
+        <p>No currency data</p>
+      }
+    </div>
+  </div>
+} @else {
+  <p>Loading Net Worth...</p>
+}
 </div>

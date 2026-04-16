@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   EventEmitter,
@@ -34,7 +34,7 @@ import { RandBalancePipe } from '../pipe/rand-balance.pipe';
       </div>
     </div>
   </div>`,
-    imports: [CommonModule, RandBalancePipe]
+    imports: [RandBalancePipe]
 })
 export class ChildComponent {
   @Input() balance = 0;

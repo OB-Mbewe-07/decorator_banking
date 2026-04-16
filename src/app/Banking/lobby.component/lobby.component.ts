@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, OnInit } from '@angular/core';
 import { DataServicesCalls } from '../services/data.services';
 import { ClientData } from '../modals/data-service.modal';
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-lobby-page',
-    imports: [CommonModule, FormsModule],
+    imports: [FormsModule],
     template: `
        <div class="lobby-container">
     <h1 class="page-title">Loan Request Portal</h1>
