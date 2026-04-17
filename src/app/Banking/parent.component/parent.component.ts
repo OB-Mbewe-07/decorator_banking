@@ -5,11 +5,11 @@ import {
   inject,
   OnInit,
   OnDestroy,
-  ChangeDetectorRef
-} from '@angular/core';  
+  ChangeDetectorRef,
+} from '@angular/core';
 import { BankAccount } from '../modals/account.modal';
 import { HighlightDirective } from '../directive/higlight.directive';
-import { ChildComponent } from '../child.component/child.component';
+import { ChildComponent } from '../components/child.component/child.component';
 import { RandBalancePipe } from '../pipe/rand-balance.pipe';
 import { THEME } from '../theme/theme.factory';
 import { USER_OBJECT } from '../../core/user.object';
@@ -19,11 +19,11 @@ import { DataServicesCalls } from '../services/data.services';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: `app-bank-parent`,
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [CommonModule, HighlightDirective, ChildComponent, RandBalancePipe],
-    templateUrl: './parent.component.html',
-    styleUrl: './parent.component.css'
+  selector: `app-bank-parent`,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, HighlightDirective, ChildComponent, RandBalancePipe],
+  templateUrl: './parent.component.html',
+  styleUrl: './parent.component.css',
 })
 export class ParentComponent implements OnInit, OnDestroy {
   private netWorthService = inject(NetWorthService);
@@ -46,8 +46,8 @@ export class ParentComponent implements OnInit, OnDestroy {
         this.calculateNetWorth();
         this.balanceChange();
         this.cdr.detectChanges();
-      })
-    )
+      }),
+    );
   }
 
   ngOnDestroy(): void {
