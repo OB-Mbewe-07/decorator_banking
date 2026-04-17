@@ -4,6 +4,8 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   inject,
   OnInit,
+  OnDestroy,
+  ChangeDetectorRef
 } from '@angular/core';  
 import { BankAccount } from '../modals/account.modal';
 import { HighlightDirective } from '../directive/higlight.directive';
@@ -14,6 +16,7 @@ import { USER_OBJECT } from '../../core/user.object';
 import { NetWorthService } from '../services/net-worth.service';
 import { NetworthModel } from '../services/net-worth.model';
 import { DataServicesCalls } from '../services/data.services';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: `app-bank-parent`,
@@ -22,12 +25,14 @@ import { DataServicesCalls } from '../services/data.services';
     templateUrl: './parent.component.html',
     styleUrl: './parent.component.css'
 })
-export class ParentComponent implements OnInit {
+export class ParentComponent implements OnInit, OnDestroy {
   private netWorthService = inject(NetWorthService);
+  private apiSub = new Subscription();
   private apiData = inject(DataServicesCalls);
 
   theme = inject(THEME);
   loggedIn = inject(USER_OBJECT);
+  private cdr = inject(ChangeDetectorRef);
 
   accounts!: BankAccount[];
   selectedAccount: BankAccount | null = null;
@@ -35,11 +40,18 @@ export class ParentComponent implements OnInit {
   selectedCurrency: string = 'ZAR';
 
   ngOnInit() {
-    this.apiData.getAccountData().subscribe((data) => {
-      this.accounts = data;
-      this.calculateNetWorth();
-      this.balanceChange();
-    });
+    this.apiSub.add(
+      this.apiData.getAccountData().subscribe((data) => {
+        this.accounts = data;
+        this.calculateNetWorth();
+        this.balanceChange();
+        this.cdr.detectChanges();
+      })
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.apiSub.unsubscribe();
   }
 
   calculateNetWorth() {
