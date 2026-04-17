@@ -1,6 +1,5 @@
 import {
   Component,
-  DestroyRef,
   inject,
   OnInit,
   OnDestroy,
@@ -12,10 +11,13 @@ import { BankAccount } from '../../modals/account.modal';
 import { LoanService } from '../../services/loan.service';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { BankingStoreServices } from '../../store/loans.service';
+import { AsyncPipe } from '@angular/common';
+import { RandBalancePipe } from "../../pipe/rand-balance.pipe";
 
 @Component({
   selector: 'app-lobby-page',
-  imports: [FormsModule],
+  imports: [FormsModule, AsyncPipe, RandBalancePipe],
   template: `
     <div class="lobby-container">
       <h1 class="page-title">Loan Request Portal</h1>
@@ -24,7 +26,7 @@ import { Subscription } from 'rxjs';
       </p>
 
       <div class="client-container">
-        @for (client of this.clientData; track $index) {
+        @for (client of this.clientData; track client.name) {
           <div class="client-card">
             <div class="card-header">
               <h2>{{ client.name }}</h2>
@@ -48,6 +50,11 @@ import { Subscription } from 'rxjs';
 
             <div class="loan-request-section">
               <h3>Request Loan</h3>
+              @if (error$ | async; as errorMessage) {
+                <div class="error-message">
+                  {{ errorMessage }}
+                </div>
+              }
 
               <div class="form-row">
                 <select [(ngModel)]="selectedAccountId" class="account-select">
@@ -77,7 +84,7 @@ import { Subscription } from 'rxjs';
               >
               </textarea>
 
-              <button class="loan-btn" (click)="submitLoanRequest()">
+              <button class="loan-btn" (click)="onSubmitLoan()">
                 Submit Loan Request
               </button>
             </div>
@@ -86,23 +93,54 @@ import { Subscription } from 'rxjs';
           <p class="no-data">No client data found.</p>
         }
       </div>
+
+      <div class="loan-requests">
+        <h2>My Recent Loan Requests</h2>
+
+        <ul class="loan-list">
+          @for (loan of (loans$ | async); track loan.id) {
+            <li class="loan-item">
+              <span class="amount">
+                {{ loan.amount | randBalance:'ZAR' }}
+              </span> 
+              <span class="status-badge">
+                {{ loan.status }}
+              </span>
+              <span class="purpose">
+                ({{ loan.purpose ?? 'No purpose provided' }})
+              </span>
+            </li>
+          } @empty {
+            <li class="no-data">No recent loan requests found.</li>
+          }
+        </ul>
+      </div>
     </div>
   `,
 })
 export class LobbyPageComponent implements OnInit, OnDestroy {
   private apiData = inject(DataServicesCalls);
   private clientSub = new Subscription();
-  private loanService = inject(LoanService);
   private cdr = inject(ChangeDetectorRef);
+  private loanState = inject(BankingStoreServices);
 
   clientData: ClientData[] = [];
   accounts: BankAccount[] = [];
-
   selectedAccountId: number | null = null;
   loanAmount: number = 0;
   loanReason: string = '';
 
+  //state management
+  amount: number = 0;
+  purpose: string = '';
+  selectedId: string = '';
+
+  loans$ = this.loanState.loans$;
+  submitting$ = this.loanState.submitting$;
+  error$ = this.loanState.error$;
+
   ngOnInit(): void {
+    this.loanState.loadLoans();
     this.clientSub.add(
       this.apiData.getClients().subscribe({
         next: (data) => {
@@ -130,33 +168,17 @@ export class LobbyPageComponent implements OnInit, OnDestroy {
     console.log('cleaned');
   }
 
-  hasUnsavedChanges(): boolean {
-    return this.loanAmount > 0 || this.loanReason !== '';
+  onSubmitLoan() {
+    if (this.amount > 0 && this.selectedId) {
+      this.loanState.submitLoan(this.amount, this.selectedId, this.purpose);
+
+      this.amount = 0;
+      this.purpose = '';
+      this.selectedId = '';
+    }
   }
 
-  submitLoanRequest() {
-    if (!this.selectedAccountId || this.loanAmount <= 0) {
-      alert('Please select an account and enter a valid amount');
-      return;
-    }
-
-    const selectedAccount = this.accounts.find(
-      (a) => a.id === this.selectedAccountId,
-    );
-
-    this.loanService.submitLoanRequest({
-      accountId: this.selectedAccountId,
-      accountNumber: selectedAccount?.accountNumber || '',
-      amount: this.loanAmount,
-      reason: this.loanReason,
-      status: 'pending',
-      requestDate: new Date(),
-    });
-
-    alert('Loan request submitted successfully!');
-
-    this.loanAmount = 0;
-    this.loanReason = '';
-    this.selectedAccountId = null;
+  hasUnsavedChanges(): boolean {
+    return this.loanAmount > 0 || this.loanReason !== '';
   }
 }

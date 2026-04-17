@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
   imports: [FormsModule],
   template: `
     <div class="lobby-container">
-      <h1 class="page-title">Loan Request Portal</h1>
+      <h1 class="page-title">Loan Request CPortal</h1>
       <p class="subtitle">
         Select a client and request a loan from their account
       </p>

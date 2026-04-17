@@ -1,7 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { LoanState } from './loans.model';
 
-
 export const selectLoansFeature = createFeatureSelector<LoanState>('loans');
 
 export const selectLoans = createSelector(

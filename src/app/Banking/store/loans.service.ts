@@ -8,10 +8,10 @@ import * as LoanActions from "./loans.actions"
 @Injectable({
     providedIn: 'root'
 })
-export class BankingStoreServicea{
+export class BankingStoreServices{
     private store = inject(Store);
 
-    loans$$: Observable<Loan[]> = this.store.select(LoanSelectors.selectLoans);
+    loans$: Observable<Loan[]> = this.store.select(LoanSelectors.selectLoans);
     loading$ = this.store.select(LoanSelectors.selectLoading);
     submitting$ = this.store.select(LoanSelectors.selectSubmitting);
     error$ = this.store.select(LoanSelectors.selectError);
