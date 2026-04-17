@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { ParentComponent } from './Banking/parent.component/parent.component';
+import { ParentComponent } from './Banking/components/parent.component/parent.component';
 import { LobbyPageComponent } from './Banking/components/lobby.component/lobby.component';
-import { NotFoundComponentPage } from './Banking/not-found.component/not-found.component';
+import { NotFoundComponentPage } from './Banking/components/not-found.component/not-found.component';
 import { unsavedChangesGaurd } from './core/guards/unsaved-changes.gaurds';
 
 export const routes: Routes = [

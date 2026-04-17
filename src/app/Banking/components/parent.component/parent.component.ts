@@ -7,16 +7,17 @@ import {
   OnDestroy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { BankAccount } from '../modals/account.modal';
-import { HighlightDirective } from '../directive/higlight.directive';
-import { ChildComponent } from '../components/child.component/child.component';
-import { RandBalancePipe } from '../pipe/rand-balance.pipe';
-import { THEME } from '../theme/theme.factory';
-import { USER_OBJECT } from '../../core/user.object';
-import { NetWorthService } from '../services/net-worth.service';
-import { NetworthModel } from '../services/net-worth.model';
-import { DataServicesCalls } from '../services/data.services';
+import { BankAccount } from '../../shared/modals/account.modal';
+import { HighlightDirective } from '../../shared/directive/higlight.directive';
+import { ChildComponent } from '../child.component/child.component';
+import { RandBalancePipe } from '../../shared/pipe/rand-balance.pipe';
+import { THEME } from '../../shared/theme/theme.factory';
+import { USER_OBJECT } from '../../../core/user.object';
+import { NetWorthService } from '../../shared/services/net-worth.service';
+import { NetworthModel } from '../../shared/services/net-worth.model';
+import { DataServicesCalls } from '../../shared/services/data.services';
 import { Subscription } from 'rxjs';
+import { BankingStoreServices } from '../../store/loans.service';
 
 @Component({
   selector: `app-bank-parent`,
@@ -29,6 +30,7 @@ export class ParentComponent implements OnInit, OnDestroy {
   private netWorthService = inject(NetWorthService);
   private apiSub = new Subscription();
   private apiData = inject(DataServicesCalls);
+  private loanState = inject(BankingStoreServices);
 
   theme = inject(THEME);
   loggedIn = inject(USER_OBJECT);
@@ -39,6 +41,11 @@ export class ParentComponent implements OnInit, OnDestroy {
   netWorth: NetworthModel | null = null;
   selectedCurrency: string = 'ZAR';
 
+  //state managament
+  loans$ = this.loanState.loans$;
+  submitting$ = this.loanState.submitting$;
+  error$ = this.loanState.error$;
+
   ngOnInit() {
     this.apiSub.add(
       this.apiData.getAccountData().subscribe((data) => {
@@ -48,6 +55,11 @@ export class ParentComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }),
     );
+
+    this.loanState.loadLoans();
+    this.loans$.subscribe(loans => {
+      console.log('All loans: ', loans);
+    }); 
   }
 
   ngOnDestroy(): void {

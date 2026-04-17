@@ -1,22 +1,22 @@
-import { BankAccount } from "../modals/account.modal";
-import { ClientData } from "../modals/data-service.modal";
+import { BankAccount } from '../shared/modals/account.modal';
+import { ClientData } from '../shared/modals/data-service.modal';
 
 export interface Loan {
-  id?: string;                    
+  id?: string;
   loanNumber?: string;
-  user: ClientData;              
-  account: BankAccount;           
+  user: ClientData;
+  account: BankAccount;
   amount: number;
-  purpose?: string;               
+  purpose?: string;
   status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'DISBURSED' | 'CANCELLED';
   requestedDate: string;
   reviewedDate?: string;
-  reviewedBy?: string;           
+  reviewedBy?: string;
   rejectionReason?: string;
 }
 
 export interface LoanState {
-  loans: Loan[];         
+  loans: Loan[];
   selectedLoan: Loan | null;
   loading: boolean;
   error: string | null;

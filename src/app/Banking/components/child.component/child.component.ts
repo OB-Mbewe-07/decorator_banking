@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RandBalancePipe } from '../../pipe/rand-balance.pipe';
+import { RandBalancePipe } from '../../shared/pipe/rand-balance.pipe';
 
 @Component({
   selector: 'app-child',
