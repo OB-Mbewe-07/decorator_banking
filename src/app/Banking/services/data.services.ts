@@ -16,6 +16,6 @@ export class DataServicesCalls{
     }
 
     getAccountData(): Observable<BankAccount[]>{
-        return this.http.get<BankAccount[]>('/assets/account.json');
+        return this.http.get<BankAccount[]>('assets/account.json');
     }
 }

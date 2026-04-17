@@ -43,9 +43,9 @@
     </button>
   </div>
 
-  @if (accounts) {
+  @if (this.accounts) {
     <div class="accounts-grid">
-      @for (account of accounts; track account.id) {
+      @for (account of this.accounts; track account.id) {
         <div
           class="account-card"
           appHighlight
