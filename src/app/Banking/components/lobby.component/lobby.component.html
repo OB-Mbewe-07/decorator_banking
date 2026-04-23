@@ -36,7 +36,7 @@
               }
 
               <div class="form-row">
-                <select [(ngModel)]="selectedAccountId" class="account-select">
+                <select [(ngModel)]="selectedId" class="account-select">
                   <option value="" disabled selected>
                     -- Select Account --
                   </option>
@@ -49,7 +49,7 @@
 
                 <input
                   type="number"
-                  [(ngModel)]="loanAmount"
+                  [(ngModel)]="amount"
                   class="amount-input"
                   placeholder="Loan Amount (ZAR)"
                   min="1000"
@@ -57,7 +57,7 @@
               </div>
 
               <textarea
-                [(ngModel)]="loanReason"
+                [(ngModel)]="purpose"
                 class="reason-textarea"
                 placeholder="Reason for loan (e.g. Business expansion, Vehicle purchase...)"
               >

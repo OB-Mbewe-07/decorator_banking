@@ -23,3 +23,13 @@ export const selectLoan = createAction(
 );
 
 export const clearError = createAction('[Loan] Clear Error');
+
+export const submitLoanFailure = createAction(
+  '[Loan] Submit Loan Failure',
+  props<{ error: string }>()
+);
+
+export const loadLoansFailure = createAction(
+  '[Loan] Load Loans Failure',
+  props<{ error: string }>()
+);

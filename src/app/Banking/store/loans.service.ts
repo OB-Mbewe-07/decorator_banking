@@ -19,6 +19,7 @@ export class BankingStoreServices{
 
     submitLoan(amount: number, accountId: string, purpose?: string): void {
         this.store.dispatch(LoanActions.submitLoan({ amount, accountId, purpose }));
+        console.log("Loan recieved");
     }
 
     loadLoans(): void {

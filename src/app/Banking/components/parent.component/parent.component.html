@@ -134,4 +134,30 @@
 } @else {
   <p>Loading Net Worth...</p>
 }
+
+<div class="loans-section">
+  <h2>Loan Requests</h2>
+  <ul>
+    @for (loan of pendingLoans(); track loan.id) {
+      @if(loan.status !== 'PENDING'){
+        <li>
+          <p><strong>Applicant:</strong> {{ loan.applicantName}}</p>
+          <p><strong>Amount:</strong> {{ loan.amount }}</p>
+          <p><strong>Purpose:</strong> {{ loan.purpose }}</p>
+          <p><strong>Status:</strong> {{ loan.status }}</p>
+
+          <textarea
+            [(ngModel)]="rejectionReasons[loan.id]"
+            placeholder="Reason for rejection (optional)"
+          ></textarea>
+
+          <button (click)="approveLoan(loan.id)">Approve</button>
+          <button (click)="declineLoan(loan.id ,rejectionReasons[loan.id])">Reject</button>
+        </li>
+      }
+    } @empty {
+      <li>No loan requests found.</li>
+    }
+  </ul>
+</div>
 </div>

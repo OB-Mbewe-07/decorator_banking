@@ -6,6 +6,9 @@ import { CURRENT_USER, USER_OBJECT } from './core/user.object';
 import { THEME, themeFactory } from './Banking/shared/theme/theme.factory';
 import { provideState, provideStore } from '@ngrx/store';
 import { loansReducer } from './Banking/store/loans.reducer';
+import Aura from '@primeuix/themes/aura';
+import { AuraBaseDesignTokens } from '@primeuix/themes/aura/base';
+import { Preset } from '@primeuix/themes/types';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState('loans', loansReducer),
     { provide: USER_OBJECT, useValue: CURRENT_USER },
-    { provide: THEME, useFactory: themeFactory },
+    { provide: THEME, useFactory: themeFactory }
   ],
 };
+

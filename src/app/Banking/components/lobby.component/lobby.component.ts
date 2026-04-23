@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import { BankingStoreServices } from '../../store/loans.service';
 import { AsyncPipe } from '@angular/common';
 import { RandBalancePipe } from '../../shared/pipe/rand-balance.pipe';
+import { LoanService } from '../../shared/services/server-data/server-data.service';
 
 @Component({
   selector: 'app-lobby-page',
@@ -21,15 +22,13 @@ import { RandBalancePipe } from '../../shared/pipe/rand-balance.pipe';
 })
 export class LobbyPageComponent implements OnInit, OnDestroy {
   private apiData = inject(DataServicesCalls);
+  private loanService = inject(LoanService);
   private clientSub = new Subscription();
   private cdr = inject(ChangeDetectorRef);
   private loanState = inject(BankingStoreServices);
 
   clientData: ClientData[] = [];
   accounts: BankAccount[] = [];
-  selectedAccountId: number | null = null;
-  loanAmount: number = 0;
-  loanReason: string = '';
 
   //state management
   amount: number = 0;
@@ -39,6 +38,8 @@ export class LobbyPageComponent implements OnInit, OnDestroy {
   loans$ = this.loanState.loans$;
   submitting$ = this.loanState.submitting$;
   error$ = this.loanState.error$;
+
+  successMessage: string | null = null;
 
   ngOnInit(): void {
     this.loanState.loadLoans();
@@ -64,24 +65,36 @@ export class LobbyPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    this.clientSub.unsubscribe();
-    console.log('cleaned');
-  }
+  
 
   onSubmitLoan() {
-    console.log("Loan Submitted");
-    console.log("Amount: ",this.amount);
-    console.log("id: ",this.selectedId);
-    if (this.amount > 0 && this.selectedId) {
-      this.loanState.submitLoan(this.amount, this.selectedId, this.purpose);
-      this.amount = 0;
-      this.purpose = '';
-      this.selectedId = '';
-    }
+    this.successMessage = null;
+    const applicantName = this.clientData[0]?.name;
+
+    this.clientSub.add(
+      this.loanService
+        .applyForLoan({
+          applicantName,
+          amount: this.amount,
+          purpose: this.purpose.trim(),
+        })
+        .subscribe({
+          next: () => {
+            this.successMessage = 'Loan request submitted successfully!';
+            console.log(this.successMessage);
+          },
+          error: (err) => {
+            console.log('error in the system', err);
+          },
+        }),
+    );
   }
 
   hasUnsavedChanges(): boolean {
-    return this.loanAmount > 0 || this.loanReason !== '';
+    return this.amount > 0 || this.purpose !== '';
+  }
+  ngOnDestroy(): void {
+    this.clientSub.unsubscribe();
+    console.log('cleaned');
   }
 }

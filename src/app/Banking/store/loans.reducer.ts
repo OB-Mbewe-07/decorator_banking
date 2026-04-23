@@ -23,9 +23,36 @@ export const loansReducer = createReducer(
         loading: false
     })),
 
+    on(LoanActions.loadLoans, (state) => {
+        console.log('loans working'); 
+        return {
+            ...state,
+            loading: true,
+            error: null
+        };
+    }),
+
+    on(LoanActions.submitLoanFailure, (state, { error }) => ({
+        ...state,
+        submitting: false,
+        error
+    })),
+
+    on(LoanActions.loadLoansFailure, (state, { error }) => ({
+        ...state,
+        loading: false,
+        error
+    })),
+
     on(LoanActions.selectLoan, (state, {loan}) => ({
         ...state,
         selectedLoan: loan
+    })),
+
+    on(LoanActions.loadLoans, (state) => ({
+        ...state,
+        loading: true,
+        error: null
     })),
 
     on(LoanActions.clearError, (state)=> ({
