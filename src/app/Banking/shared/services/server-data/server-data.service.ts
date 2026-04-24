@@ -7,11 +7,9 @@ import { Observable } from 'rxjs';
 export class LoanService {
   private baseUrl = 'http://localhost:3000/loans';
   private http = inject(HttpClient);
-
   getLoans(): Observable<Loan[]> {
     return this.http.get<Loan[]>(this.baseUrl);
   }
-
   getLoanById(id: string): Observable<Loan> {
     return this.http.get<Loan>(`${this.baseUrl}/${id}`);
   }
@@ -23,7 +21,6 @@ export class LoanService {
   approveLoan(id: string): Observable<Loan> {
     return this.http.patch<Loan>(`${this.baseUrl}/${id}/approve`, {});
   }
-
   rejectLoan(id: string, reason?: string): Observable<Loan> {
     return this.http.patch<Loan>(`${this.baseUrl}/${id}/reject`, { reason });
   }
