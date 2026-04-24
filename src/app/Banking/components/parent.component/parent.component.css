@@ -1,0 +1,16 @@
+.currency-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.currency-buttons button {
+    padding: 8px 20px;
+    border: 1px solid #ddd;
+    background: white;
+    color: black;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}

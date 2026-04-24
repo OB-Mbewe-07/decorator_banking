@@ -5,15 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
     standalone: true
 })
 export class RandBalancePipe implements PipeTransform {
-    transform(value: number): string {
+    transform(value: number, currency: string = 'ZAR'): string {
         return new Intl.NumberFormat('en-ZA', {
             style: 'currency',
-            currency: 'ZAR',
+            currency: currency,
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         })
-        .format(value)
-        .replace('ZAR', 'R ')
-        .trim();
+        .format(value); 
     }
 }
