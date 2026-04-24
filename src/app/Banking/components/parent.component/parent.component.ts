@@ -21,6 +21,7 @@ import { BankingStoreServices } from '../../store/loans.service';
 import { LoanService } from '../../shared/services/server-data/server-data.service';
 import { Loan } from '../../store/loans.model';
 import { FormsModule } from '@angular/forms';
+import { DataTransformationService } from '../../shared/services/server-data/data-seed.service';
 
 @Component({
   selector: `app-bank-parent`,
@@ -31,6 +32,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ParentComponent implements OnInit, OnDestroy {
   private netWorthService = inject(NetWorthService);
+  private dataTransformation = inject(DataTransformationService);
   private loanService = inject(LoanService);
   private apiSub = new Subscription();
   private apiData = inject(DataServicesCalls);
@@ -61,6 +63,14 @@ export class ParentComponent implements OnInit, OnDestroy {
         this.cdr.detectChanges();
       }),
     );
+
+    this.apiSub.add(
+      this.dataTransformation.seedAccountsFromStarWarsCharacters().subscribe({
+        next: (accounts) => console.log(`Seeded ${accounts.length} accounts`, accounts),
+        error: (err) => console.error('Seeding failed', err)
+      }),
+    );
+
 
     this.loadLoans();
   }

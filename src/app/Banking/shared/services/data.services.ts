@@ -9,10 +9,10 @@ import { BankAccount } from '../modals/account.modal';
 })
 export class DataServicesCalls {
   private http = inject(HttpClient);
-  private apiUrl = 'https://swapi.info/api/people';
+  private userApi = 'https://swapi.info/api/people';
 
   getClients(): Observable<ClientData[]> {
-    return this.http.get<ClientData[]>(this.apiUrl);
+    return this.http.get<ClientData[]>(this.userApi);
   }
 
   getAccountData(): Observable<BankAccount[]> {
