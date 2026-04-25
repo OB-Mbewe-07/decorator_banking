@@ -1,0 +1,223 @@
+/* ── Layout Container ── */
+.lobby-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'DM Sans', sans-serif;
+  background: #f5f7fa;
+}
+
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: #0C447C;
+  margin: 0 0 0.25rem;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 2.5rem;
+}
+
+/* ── Client Cards Grid ── */
+.client-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.client-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 0.5px solid #e0e0e0;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.client-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(12, 68, 124, 0.08);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.card-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #e8f0f9;
+  color: #185FA5;
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+hr {
+  border: none;
+  border-top: 0.5px solid #eee;
+  margin: 0 0 1rem 0;
+}
+
+/* ── Details Section ── */
+.details {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.details p {
+  margin: 0.25rem 0;
+}
+
+.details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.details li {
+  font-size: 12px;
+  background: #f9f9f9;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* ── Loan Request Form Section ── */
+.loan-request-section {
+  background: #fcfcfc;
+  border: 0.5px solid #efefef;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-top: auto;
+}
+
+.loan-request-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0C447C;
+  margin: 0 0 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.account-select, .amount-input, .reason-textarea {
+  width: 100%;
+  border: 0.5px solid #d0d0d0;
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.account-select:focus, .amount-input:focus, .reason-textarea:focus {
+  border-color: #185FA5;
+}
+
+.reason-textarea {
+  min-height: 60px;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.loan-btn {
+  width: 100%;
+  background: #0C447C;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.loan-btn:hover {
+  background: #185FA5;
+}
+
+.error-message {
+  background: #fdf0ee;
+  color: #c0392b;
+  font-size: 12px;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  border: 0.5px solid rgba(192, 57, 43, 0.2);
+}
+
+/* ── Recent Loan Requests Section ── */
+.loan-requests {
+  background: #fff;
+  border-radius: 12px;
+  border: 0.5px solid #e0e0e0;
+  padding: 2rem;
+}
+
+.loan-requests h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #0C447C;
+  margin: 0 0 1.5rem;
+}
+
+.loan-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.loan-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 0.5px solid #eee;
+}
+
+.loan-item:last-child {
+  border-bottom: none;
+}
+
+.loan-item .amount {
+  font-weight: 600;
+  color: #1a1a1a;
+  min-width: 100px;
+}
+
+.loan-item .purpose {
+  font-size: 13px;
+  color: #888;
+}
+
+.no-data {
+  color: #aaa;
+  font-style: italic;
+  font-size: 14px;
+}

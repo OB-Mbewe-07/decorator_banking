@@ -77,7 +77,7 @@
         <h2>My Recent Loan Requests</h2>
 
         <ul class="loan-list">
-          @for (loan of (loans$ | async); track loan.id) {
+          @for (loan of userLoans; track loan.id) {
             <li class="loan-item">
               <span class="amount">
                 {{ loan.amount | randBalance:'ZAR' }}

@@ -2,9 +2,15 @@
 <div class="page" [style.backgroundColor]="theme.backgroundColor">
   @if (loggedIn) {
     <ng-container>
-      <h2>Logged In User</h2>
-      <div>Hello: {{ loggedIn.name }}</div>
-      <div>Email: {{ loggedIn.email }}</div>
+      <div class="logged-in-banner">
+        <div class="logged-in-avatar">
+          {{ loggedIn.name?.charAt(0) }}
+        </div>
+        <div class="logged-in-info">
+          <span class="logged-in-name">{{ loggedIn.name }}</span>
+          <span class="logged-in-email">{{ loggedIn.email }}</span>
+        </div>
+      </div>
     </ng-container>
   }
 

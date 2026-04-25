@@ -14,11 +14,14 @@ import { BankingStoreServices } from '../../store/loans.service';
 import { AsyncPipe } from '@angular/common';
 import { RandBalancePipe } from '../../shared/pipe/rand-balance.pipe';
 import { LoanService } from '../../shared/services/server-data/server-data.service';
+import { UserLoginService } from '../../shared/services/login/login.service';
+import { Loan } from '../../store/loans.model';
 
 @Component({
   selector: 'app-lobby-page',
   imports: [FormsModule, AsyncPipe, RandBalancePipe],
   templateUrl: './lobby.component.html',
+  styleUrl: './lobby.component.css',
 })
 export class LobbyPageComponent implements OnInit, OnDestroy {
   private apiData = inject(DataServicesCalls);
@@ -26,6 +29,7 @@ export class LobbyPageComponent implements OnInit, OnDestroy {
   private clientSub = new Subscription();
   private cdr = inject(ChangeDetectorRef);
   private loanState = inject(BankingStoreServices);
+  private loginService = inject(UserLoginService);
 
   clientData: ClientData[] = [];
   accounts: BankAccount[] = [];
@@ -38,15 +42,34 @@ export class LobbyPageComponent implements OnInit, OnDestroy {
   loans$ = this.loanState.loans$;
   submitting$ = this.loanState.submitting$;
   error$ = this.loanState.error$;
-
   successMessage: string | null = null;
+  user: string = '';
+  userLoans: Loan[] = [];
 
   ngOnInit(): void {
     this.loanState.loadLoans();
+    this.user = this.loginService.getUser();
+
     this.clientSub.add(
       this.apiData.getClients().subscribe({
         next: (data) => {
-          this.clientData = data;
+          this.clientData = data.filter(
+            (x) => x.name === this.loginService.getUser(),
+          );
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      }),
+    );
+
+    this.clientSub.add(
+      this.loanService.getLoans().subscribe({
+        next: (data) => {
+          this.userLoans = data.filter(
+            (x) => x.applicantName === this.loginService.getUser(),
+          );
           this.cdr.detectChanges();
         },
         error: (err) => {
@@ -64,8 +87,6 @@ export class LobbyPageComponent implements OnInit, OnDestroy {
       }),
     );
   }
-
-  
 
   onSubmitLoan() {
     this.successMessage = null;
