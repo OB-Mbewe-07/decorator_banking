@@ -3,10 +3,16 @@ import { ParentComponent } from './Banking/components/parent.component/parent.co
 import { LobbyPageComponent } from './Banking/components/lobby.component/lobby.component';
 import { NotFoundComponentPage } from './Banking/components/not-found.component/not-found.component';
 import { unsavedChangesGaurd } from './core/guards/unsaved-changes.gaurds';
+import { AppLoginComponent } from './Banking/components/login.component/login.component';
 
 export const routes: Routes = [
   {
     path: '',
+    component: AppLoginComponent,
+    title: 'Login',
+  },
+  {
+    path: 'admin',
     component: ParentComponent,
     title: 'All accounts',
     data: { title: 'Accounts' },

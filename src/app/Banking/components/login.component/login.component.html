@@ -1,0 +1,71 @@
+<div class="login-wrap">
+  <!-- Left panel -->
+  <div class="login-left">
+    <div class="login-left-bg"></div>
+    <div class="login-left-pattern"></div>
+    <div class="login-left-circle1"></div>
+    <div class="login-left-circle2"></div>
+    <div class="login-left-circle3"></div>
+
+    <div class="login-badge">
+      <span class="login-badge-dot"></span>
+      <span>Secure Banking</span>
+    </div>
+
+    <h1 class="login-tagline">Your money, <em>intelligently</em> managed.</h1>
+    <p class="login-sub">CapitalEdge gives you complete visibility and control over your finances in one place.</p>
+
+    <div class="login-stats">
+      <div class="login-stat">
+        <p class="login-stat-num">R2.4B+</p>
+        <p class="login-stat-label">Assets managed</p>
+      </div>
+      <div class="login-stat">
+        <p class="login-stat-num">48K+</p>
+        <p class="login-stat-label">Active clients</p>
+      </div>
+      <div class="login-stat">
+        <p class="login-stat-num">99.9%</p>
+        <p class="login-stat-label">Uptime</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="login-right">
+    <div class="login-logo">
+      <div class="login-logo-mark">CE</div>
+      <span class="login-logo-name">CapitalEdge</span>
+    </div>
+
+    <h2 class="login-heading">Welcome back</h2>
+    <p class="login-subheading">Sign in to your account to continue</p>
+
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input class="form-input" type="email" [(ngModel)]="email" placeholder="you@capitaledge.co.za" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" type="password" [(ngModel)]="password" placeholder="••••••••" />
+    </div>
+
+    <div class="login-meta">
+      <label class="login-remember">
+        <input type="checkbox" [(ngModel)]="remember" /> Remember me
+      </label>
+      <a class="login-forgot" href="#">Forgot password?</a>
+    </div>
+
+    <button class="login-btn" (click)="onLogin()">Sign in to dashboard</button>
+
+    <div class="login-divider">
+      <div class="login-divider-line"></div>
+      <span>or</span>
+      <div class="login-divider-line"></div>
+    </div>
+
+    <p class="login-signup">Don't have an account? <a href="#">Request access</a></p>
+  </div>
+</div>
