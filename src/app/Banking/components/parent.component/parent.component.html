@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="page" [style.backgroundColor]="theme.backgroundColor">
   @if (loggedIn) {
     <ng-container>
@@ -140,19 +141,37 @@
   <ul>
     @for (loan of pendingLoans(); track loan.id) {
       @if(loan.status !== 'PENDING'){
-        <li>
-          <p><strong>Applicant:</strong> {{ loan.applicantName}}</p>
-          <p><strong>Amount:</strong> {{ loan.amount }}</p>
-          <p><strong>Purpose:</strong> {{ loan.purpose }}</p>
-          <p><strong>Status:</strong> {{ loan.status }}</p>
+        <li class="loan-item">
+          <div class="loan-summary">
+            <div class="loan-info">
+              <span class="loan-applicant">{{ loan.applicantName }}</span>
+              <span class="loan-meta">{{ loan.purpose }} — {{ loan.amount }}</span>
+            </div>
+            <div class="loan-actions">
+              <span class="loan-status-badge">{{ loan.status }}</span>
+              <button class="btn-approve" (click)="approveLoan(loan.id)">Approve</button>
+              <button 
+                class="btn-reject-toggle" 
+                (click)="toggleRejection(loan.id)">
+                {{ activeRejection === loan.id ? 'Cancel' : 'Reject' }}
+              </button>
+            </div>
+          </div>
 
-          <textarea
-            [(ngModel)]="rejectionReasons[loan.id]"
-            placeholder="Reason for rejection (optional)"
-          ></textarea>
-
-          <button (click)="approveLoan(loan.id)">Approve</button>
-          <button (click)="declineLoan(loan.id ,rejectionReasons[loan.id])">Reject</button>
+          @if (activeRejection === loan.id) {
+            <div class="rejection-dropdown">
+              <label class="form-label">Reason for rejection</label>
+              <textarea
+                [(ngModel)]="rejectionReasons[loan.id]"
+                placeholder="Provide a reason for rejecting this loan..."
+              ></textarea>
+              <button 
+                class="btn-reject-confirm" 
+                (click)="declineLoan(loan.id, rejectionReasons[loan.id])">
+                Confirm Rejection
+              </button>
+            </div>
+          }
         </li>
       }
     } @empty {

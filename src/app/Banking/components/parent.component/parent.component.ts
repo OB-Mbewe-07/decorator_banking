@@ -22,11 +22,19 @@ import { LoanService } from '../../shared/services/server-data/server-data.servi
 import { Loan } from '../../store/loans.model';
 import { FormsModule } from '@angular/forms';
 import { DataTransformationService } from '../../shared/services/server-data/data-seed.service';
+import { NavbarComponent } from '../nav.component/nav.component';
 
 @Component({
   selector: `app-bank-parent`,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [CommonModule, HighlightDirective, ChildComponent, RandBalancePipe , FormsModule],
+  imports: [
+    CommonModule,
+    HighlightDirective,
+    ChildComponent,
+    RandBalancePipe,
+    FormsModule,
+    NavbarComponent,
+  ],
   templateUrl: './parent.component.html',
   styleUrl: './parent.component.css',
 })
@@ -51,7 +59,7 @@ export class ParentComponent implements OnInit, OnDestroy {
   loans$!: Observable<Loan[]>;
   submitting$ = this.loanState.submitting$;
   error$ = this.loanState.error$;
-  loansData : Loan[] | null = null; 
+  loansData: Loan[] | null = null;
   rejectionReasons: { [loanId: string]: string } = {};
 
   ngOnInit() {
@@ -66,11 +74,11 @@ export class ParentComponent implements OnInit, OnDestroy {
 
     this.apiSub.add(
       this.dataTransformation.seedAccountsFromStarWarsCharacters().subscribe({
-        next: (accounts) => console.log(`Seeded ${accounts.length} accounts`, accounts),
-        error: (err) => console.error('Seeding failed', err)
+        next: (accounts) =>
+          console.log(`Seeded ${accounts.length} accounts`, accounts),
+        error: (err) => console.error('Seeding failed', err),
       }),
     );
-
 
     this.loadLoans();
   }
@@ -80,8 +88,8 @@ export class ParentComponent implements OnInit, OnDestroy {
     this.loans$.subscribe({
       next: (data) => {
         this.loansData = data;
-      }
-    })
+      },
+    });
   }
 
   ngOnDestroy(): void {
@@ -112,21 +120,27 @@ export class ParentComponent implements OnInit, OnDestroy {
         console.log('loan approved');
         this.loadLoans();
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error(err),
     });
   }
   declineLoan(id: string, reason?: string) {
-    this.loanService.rejectLoan(id , reason).subscribe({
+    this.loanService.rejectLoan(id, reason).subscribe({
       next: () => {
         console.log('loan rejected');
         this.loadLoans();
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error(err),
     });
   }
 
   pendingLoans() {
-    return this.loansData?.filter(x => x.status === 'pending') ?? [];
+    return this.loansData?.filter((x) => x.status === 'pending') ?? [];
+  }
+
+  activeRejection: string | null = null;
+
+  toggleRejection(loanId: string) {
+    this.activeRejection = this.activeRejection === loanId ? null : loanId;
   }
 
   balanceChange() {

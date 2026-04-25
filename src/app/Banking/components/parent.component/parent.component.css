@@ -1,16 +1,479 @@
+* {
+  font-family: 'DM Sans', sans-serif;
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 2rem;
+}
+
+/* ── Page Header ── */
+.page-header {
+  background: #fff;
+  border-radius: 12px;
+  border: 0.5px solid #e0e0e0;
+  padding: 2rem 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: #0C447C;
+  margin: 0 0 0.25rem;
+}
+
+.page-header p {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+/* ── Logged In User ── */
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #0C447C;
+  margin: 0 0 0.5rem;
+}
+
+/* ── Currency Buttons ── */
 .currency-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 24px;
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .currency-buttons button {
-    padding: 8px 20px;
-    border: 1px solid #ddd;
-    background: white;
-    color: black;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
+  height: 36px;
+  padding: 0 18px;
+  border: 0.5px solid #d0d0d0;
+  border-radius: 100px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.currency-buttons button:hover {
+  border-color: #185FA5;
+  color: #185FA5;
+  background: #f0f4f9;
+}
+
+.currency-buttons button.active {
+  background: #0C447C;
+  border-color: #0C447C;
+  color: #fff;
+}
+
+/* ── Accounts Grid ── */
+.accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.account-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 0.5px solid #e0e0e0;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.account-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(12, 68, 124, 0.08);
+  border-color: #185FA5;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-type {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #185FA5;
+  margin: 0;
+}
+
+.card-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.card-balance {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 1rem;
+  border-top: 0.5px solid #e0e0e0;
+}
+
+.balance-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+}
+
+.balance-value {
+  font-size: 22px;
+  font-weight: 500;
+  color: #0C447C;
+}
+
+/* ── Loading ── */
+.loading {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  padding: 3rem;
+}
+
+/* ── Net Worth Summary ── */
+.net-worth-summary {
+  background: linear-gradient(160deg, #185FA5 0%, #0C447C 50%, #042C53 100%);
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.net-worth-summary h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 1.5rem;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 0.5px solid rgba(255,255,255,0.15);
+  margin-bottom: 1rem;
+}
+
+.total span {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+}
+
+.total strong {
+  font-size: 24px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.breakdown p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin: 0 0 0.75rem;
+}
+
+.currency-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+}
+
+.currency-item .currency {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+}
+
+.currency-item strong {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}
+
+/* ── Loans Section ── */
+.loans-section {
+  background: #fff;
+  border-radius: 12px;
+  border: 0.5px solid #e0e0e0;
+  padding: 2rem 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.loans-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #0C447C;
+  margin: 0 0 1.5rem;
+}
+
+.loans-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loans-section li {
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 0.5px solid #e0e0e0;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.loans-section li p {
+  font-size: 13px;
+  color: #444;
+  margin: 0;
+}
+
+.loans-section li p strong {
+  color: #1a1a1a;
+}
+
+.loans-section textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px 14px;
+  border: 0.5px solid #d0d0d0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  color: #1a1a1a;
+  background: #fff;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s;
+  margin-top: 0.5rem;
+}
+
+.loans-section textarea:focus {
+  border-color: #185FA5;
+  box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.1);
+}
+
+.loans-section textarea::placeholder {
+  color: #bbb;
+}
+
+.loans-section button {
+  height: 36px;
+  padding: 0 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: none;
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.loans-section button:first-of-type {
+  background: #0C447C;
+  color: #fff;
+}
+
+.loans-section button:first-of-type:hover {
+  background: #185FA5;
+}
+
+.loans-section button:last-of-type {
+  background: #fff;
+  color: #c0392b;
+  border: 0.5px solid #c0392b;
+}
+
+.loans-section button:last-of-type:hover {
+  background: #fdf0ee;
+}
+
+.loan-item {
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 0.5px solid #e0e0e0;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.loan-item:hover {
+  border-color: #185FA5;
+}
+
+.loan-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  gap: 1rem;
+}
+
+.loan-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.loan-applicant {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.loan-meta {
+  font-size: 12px;
+  color: #888;
+}
+
+.loan-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.loan-status-badge {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #185FA5;
+  background: #e8f0f9;
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.btn-approve {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: none;
+  background: #0C447C;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-approve:hover {
+  background: #185FA5;
+}
+
+.btn-reject-toggle {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 0.5px solid #c0392b;
+  background: #fff;
+  color: #c0392b;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-reject-toggle:hover {
+  background: #fdf0ee;
+}
+
+.rejection-dropdown {
+  padding: 1rem 1.25rem;
+  border-top: 0.5px solid #e0e0e0;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rejection-dropdown .form-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.rejection-dropdown textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px 14px;
+  border: 0.5px solid #d0d0d0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  color: #1a1a1a;
+  background: #f9f9f9;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.rejection-dropdown textarea:focus {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.08);
+}
+
+.rejection-dropdown textarea::placeholder {
+  color: #bbb;
+}
+
+.btn-reject-confirm {
+  align-self: flex-end;
+  height: 36px;
+  padding: 0 18px;
+  border-radius: 8px;
+  border: none;
+  background: #c0392b;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-reject-confirm:hover {
+  background: #a93226;
+}
+
+.no-loans {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  padding: 2rem;
+  list-style: none;
 }
